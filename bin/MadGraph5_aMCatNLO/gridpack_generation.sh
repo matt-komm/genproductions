@@ -285,10 +285,11 @@ make_gridpack () {
          if [ "$queue" == "localx2" ]; then
               echo "set run_mode 2" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
               echo "set nb_core 2" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+              echo "cluster_queue = local" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
          elif [ "$queue" == "localx4" ]; then
               echo "set run_mode 2" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
               echo "set nb_core 4" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
-              echo "cluster_queue = $queue" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+              echo "cluster_queue = local" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
          else
              echo "cluster_queue = $queue" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
              if [ "$isscratchspace" -gt "0" ]; then
