@@ -161,6 +161,12 @@ make_gridpack () {
     
       if [ "$queue" == "local" ]; then
           echo "set run_mode 2" >> mgconfigscript
+      elif [ "$queue" == "localx2" ]; then
+          echo "set run_mode 2" >> mgconfigscript
+          echo "set nb_core 2" >> mgconfigscript
+      elif [ "$queue" == "localx4" ]; then
+          echo "set run_mode 2" >> mgconfigscript
+          echo "set nb_core 4" >> mgconfigscript
       else
           #suppress lsf emails
           export LSB_JOB_REPORT_MAIL="N"
@@ -276,9 +282,18 @@ make_gridpack () {
     
        #*FIXME* workaround for broken set cluster_queue and run_mode handling
        if [ "$queue" != "condor" ]; then
-         echo "cluster_queue = $queue" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
-         if [ "$isscratchspace" -gt "0" ]; then
-             echo "cluster_temp_path = `echo $RUNHOME`" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+         if [ "$queue" == "localx2" ]; then
+              echo "set run_mode 2" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+              echo "set nb_core 2" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+         elif [ "$queue" == "localx4" ]; then
+              echo "set run_mode 2" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+              echo "set nb_core 4" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+              echo "cluster_queue = $queue" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+         else
+             echo "cluster_queue = $queue" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+             if [ "$isscratchspace" -gt "0" ]; then
+                 echo "cluster_temp_path = `echo $RUNHOME`" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
+             fi
          fi
        elif [ "$queue" == "condor" ]; then
          echo "cluster_queue = None" >> ./$MGBASEDIRORIG/input/mg5_configuration.txt
