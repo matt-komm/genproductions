@@ -127,7 +127,8 @@ make_gridpack () {
       #############################################
       #Copy, Unzip and Delete the MadGraph tarball#
       #############################################
-      wget --no-check-certificate ${MGSOURCE}
+      #wget --no-check-certificate ${MGSOURCE}
+      cp /vols/build/cms/mkomm/HNL/HNL_generation/${MG} .
       tar xzf ${MG}
       rm "$MG"
     
